@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 18, 2024 at 02:43 AM
+-- Generation Time: Sep 25, 2024 at 01:30 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -203,7 +203,12 @@ INSERT INTO `m_user` (`user_id`, `level_id`, `username`, `nama`, `password`, `cr
 (2, 2, 'manager', 'Manager', '$2y$12$rDd57LqQNmOokhe52mwS.e7FyShS6lhzM.4O5BnyVYRJmiIRDgaIm', NULL, NULL),
 (3, 3, 'staff', 'Staff/Kasir', '$2y$12$0NY.LfbzS1TFtEf.35yeMedG0TAwn5N8fA1dmG8leogc1lHzED26u', NULL, NULL),
 (6, 4, 'customer-1', 'Pelanggan Pertama', '$2y$12$RQwr2PtzH13gDWT.QhVx5eM6CkHwab562x9PAgxCLiRu.LViJf8um', NULL, '2024-09-14 07:45:51'),
-(7, 2, 'manager_dua', 'Manager 2', '$2y$12$xA2fIACuGmLCHTa4wZiZ.eYpWvAaKz/KPnECDPYhg5HVnzrrrGFUW', '2024-09-17 19:01:13', '2024-09-17 19:01:13');
+(7, 2, 'manager_dua', 'Manager 2', '$2y$12$xA2fIACuGmLCHTa4wZiZ.eYpWvAaKz/KPnECDPYhg5HVnzrrrGFUW', '2024-09-17 19:01:13', '2024-09-17 19:01:13'),
+(8, 2, 'Manager22', 'Manager Dua dua', '$2y$12$SjoSejDB3ssz3ixU/imAT.VAlK3YoztEO0AZ8V55Jh2VW1qxlyUXm', '2024-09-21 08:51:17', '2024-09-21 08:51:17'),
+(9, 2, 'Manager33', 'Manager Tiga tiga', '$2y$12$KmXj39g43A6OP8g/OHMMauOzvaz4zfFyXuLvRGUJNrbCHB383boTC', '2024-09-21 09:28:05', '2024-09-21 09:28:05'),
+(15, 2, 'manager45', 'Manager44', '$2y$12$x4fm8q9yCw9YLMhNxgP9F.ODeXi1ZlgLyT6geRVEYCS.lcZnSiIjq', '2024-09-23 02:43:43', '2024-09-23 02:43:43'),
+(16, 2, 'manager12', 'Manager11', '$2y$12$w6w7HzcBHNELFQ3.HcRX3OVgyvNsYXlLA1mqTfEqEhOX2flM6racG', '2024-09-23 03:02:06', '2024-09-23 03:02:06'),
+(17, 3, 'staff1', 'dika', '$2y$12$YwcTN3jraDfPO.jL2IU8/ebZP5IT0P.ujWpJZTWcAu0kPV7Jv1B4W', '2024-09-23 18:31:32', '2024-09-23 19:07:21');
 
 -- --------------------------------------------------------
 
@@ -517,7 +522,7 @@ ALTER TABLE `m_supplier`
 -- AUTO_INCREMENT for table `m_user`
 --
 ALTER TABLE `m_user`
-  MODIFY `user_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
