@@ -11,14 +11,11 @@ class LevelModel extends Model
     use HasFactory;
 
     protected $table = 'm_level';
+    protected $tableName = 'level_id';
 
     /**
      * Mendefinisikan relasi bahwa level ini terkait dengan satu pengguna.
      *
      * @return BelongsTo
      */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(UserModel::class);
-    }
 }
