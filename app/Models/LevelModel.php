@@ -15,6 +15,10 @@ class LevelModel extends Model
     public $timestamps = true;
     protected $fillable = ['level_kode', 'level_nama'];
 
+    public function users()
+    {
+        return $this->hasMany(UserModel::class, 'level_id', 'level_id');
+    }
 
     /**
      * Mendefinisikan relasi bahwa level ini terkait dengan satu pengguna.
