@@ -148,6 +148,15 @@ class UserController extends Controller
             ]);
         }
 
+        // Menampilkan halaman form edit user
+        public function edit_ajax(string $id)
+        {
+            $user = UserModel::find($id);
+            $level = LevelModel::select('level_id', 'level_nama')->get();
+
+            return view('user.edit_ajax', ['user' => $user, 'level' => $level]);
+        }
+
         // Menyimpan perubahan data user
         public function update(Request $request, string $id)
         {
@@ -172,6 +181,60 @@ class UserController extends Controller
             // Redirect setelah update
             return redirect('/user')->with('success', 'Data user berhasil diubah');
         }
+
+        public function update_ajax(Request $request, $id)
+        {
+            // Cek apakah request berasal dari Ajax atau menginginkan JSON response
+            if ($request->ajax() || $request->wantsJson()) {
+                // Definisikan aturan validasi
+                $rules = [
+                    'level_id' => 'required|integer',
+                    'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
+                    'nama' => 'required|max:100',
+                    'password' => 'nullable|min:6|max:20'
+                ];
+
+                // Validasi input menggunakan Validator
+                $validator = Validator::make($request->all(), $rules);
+
+                // Jika validasi gagal, kirimkan respon JSON dengan pesan error
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false, // Respon JSON, true: berhasil, false: gagal
+                        'message' => 'Validasi gagal.',
+                        'msgField' => $validator->errors() // Menunjukkan field mana yang error
+                    ]);
+                }
+
+                // Cari user berdasarkan ID
+                $check = UserModel::find($id);
+                if ($check) {
+                    // Jika password tidak diisi, hapus field password dari request
+                    if (!$request->filled('password')) {
+                        $request->request->remove('password');
+                    }
+
+                    // Update data user
+                    $check->update($request->all());
+
+                    // Kirim respon berhasil
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'Data berhasil diupdate'
+                    ]);
+                } else {
+                    // Kirim respon gagal jika data tidak ditemukan
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Data tidak ditemukan'
+                    ]);
+                }
+            }
+
+            // Redirect jika request tidak berasal dari Ajax
+            return redirect('/');
+        }
+
 
         public function destroy(string $id)
         {
