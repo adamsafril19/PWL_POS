@@ -110,6 +110,18 @@ Route::group(['prefix' => 'user'], function() {
                 Route:: delete('/{id}', [LevelController:: class, 'destroy' ]); // menghapus data level
             });
         });
+        Route::middleware( ['authorize: ADM|MNG']) ->group (function() {
+            Route::group(['prefix' => 'barang'], function() {
+                Route::get('/', [BarangController:: class, 'index']);              // menampilkan halaman awal level
+                Route::post('/barang/list', [BarangController::class, 'list'])->name('barang.list');           // menampilkan data level dalam bentuk json untuk datatables
+                Route:: get('/create', [BarangController:: class, 'create' ]);       // menampilkan halaman form tambah level
+                Route::post('/', [BarangController:: class, 'store' ]);              // menyimpan data level baru
+                Route::get('/{id}', [BarangController:: class, 'show' ]);            // menampilkan detail level
+                Route::get('/{id}/edit', [BarangController:: class, 'edit' ]);       // menampilkan halaman form edit level
+                Route::put('/{id}', [BarangController:: class, 'update' ]);          // menyimpan perubahan data level
+                Route:: delete('/{id}', [BarangController:: class, 'destroy' ]); // menghapus data level
+            });
+        });
     });
     Route::get('/check-user/{username}', function($username) {
         $user = \App\Models\UserModel::where('username', $username)->first();
