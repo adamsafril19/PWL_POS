@@ -12,6 +12,11 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
+            Log::info('User already logged in', [
+                'user_id' => Auth::user()->user_id,
+                'username' => Auth::user()->username,
+                'role' => Auth::user()->getRole() // tambahkan log role
+            ]);
             return redirect()->route('home');
         }
         return view('auth.login');
@@ -30,7 +35,25 @@ class AuthController extends Controller
             $credentials = $request->only('username', 'password');
 
             if (Auth::attempt($credentials)) {
-                Log::info('Authentication successful', ['username' => $credentials['username']]);
+                $user = Auth::user();
+                Log::info('Authentication successful', [
+                    'username' => $credentials['username'],
+                    'user_id' => $user->user_id,
+                    'level_id' => $user->level_id,
+                    'role' => $user->getRole(), // log role user
+                    'role_name' => $user->getRoleName() // log nama role
+                ]);
+
+                // Debug relasi level
+                Log::info('User Level Details', [
+                    'level_relation' => $user->level()->exists(),
+                    'level_data' => $user->level ? [
+                        'level_id' => $user->level->level_id,
+                        'level_kode' => $user->level->level_kode,
+                        'level_nama' => $user->level->level_nama
+                    ] : 'No Level Data'
+                ]);
+
                 $request->session()->regenerate();
 
                 return $this->sendLoginResponse($request, true, 'Login Berhasil', route('home'));
@@ -58,7 +81,13 @@ class AuthController extends Controller
             return response()->json([
                 'status' => $status,
                 'message' => $message,
-                'redirect' => $redirect
+                'redirect' => $redirect,
+                'user' => $status ? [
+                    'id' => Auth::user()->user_id,
+                    'username' => Auth::user()->username,
+                    'role' => Auth::user()->getRole(),
+                    'role_name' => Auth::user()->getRoleName()
+                ] : null
             ], $statusCode);
         }
 

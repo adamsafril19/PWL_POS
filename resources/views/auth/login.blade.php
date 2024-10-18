@@ -25,6 +25,38 @@
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
+
+                <!-- Tambahkan error message display -->
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <!-- Debug info untuk user yang sudah login -->
+                @if(Auth::check())
+                    <div class="alert alert-info">
+                        Debug Info:
+                        <ul>
+                            <li>User ID: {{ Auth::user()->user_id }}</li>
+                            <li>Username: {{ Auth::user()->username }}</li>
+                            <li>Level ID: {{ Auth::user()->level_id }}</li>
+                            <li>Role: {{ Auth::user()->getRole() }}</li>
+                            <li>Role Name: {{ Auth::user()->getRoleName() }}</li>
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ route('login.post') }}" method="POST" id="form-login">
                     @csrf
                     <div class="input-group mb-3">
@@ -72,89 +104,107 @@
 <script src="adminlte/dist/js/adminlte.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+$(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-        $("#form-login").validate({
-            rules: {
-                username: {
-                    required: true,
-                    minlength: 4,
-                    maxlength: 20
-                },
-                password: {
-                    required: true,
-                    minlength: 6,
-                    maxlength: 20
-                }
+    $("#form-login").validate({
+        rules: {
+            username: {
+                required: true,
+                minlength: 4,
+                maxlength: 20
             },
-            messages: {
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must be at least 4 characters long",
-                    maxlength: "Your username cannot be longer than 20 characters"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 6 characters long",
-                    maxlength: "Your password cannot be longer than 20 characters"
-                }
+            password: {
+                required: true,
+                minlength: 6,
+                maxlength: 20
+            }
+        },
+        messages: {
+            username: {
+                required: "Please enter a username",
+                minlength: "Your username must be at least 4 characters long",
+                maxlength: "Your username cannot be longer than 20 characters"
             },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.input-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            },
-            submitHandler: function(form) {
-                $.ajax({
-                    url: $(form).attr('action'),
-                    type: "POST",
-                    data: $(form).serialize(),
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.status) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Login Successful',
-                                text: response.message,
-                            }).then(function() {
-                                window.location.href = response.redirect;
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Login Failed',
-                                text: response.message || 'An error occurred during login.'
+            password: {
+                required: "Please provide a password",
+                minlength: "Your password must be at least 6 characters long",
+                maxlength: "Your password cannot be longer than 20 characters"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.input-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: $(form).attr('action'),
+                type: "POST",
+                data: $(form).serialize(),
+                dataType: "json",
+                success: function(response) {
+                    if (response.status) {
+                        // Tambahkan debug info ke console
+                        console.log('Login Response:', response);
+                        if(response.user) {
+                            console.log('User Info:', {
+                                id: response.user.id,
+                                username: response.user.username,
+                                role: response.user.role,
+                                role_name: response.user.role_name
                             });
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                        var errorMessage = 'An unexpected error occurred. Please try again later.';
-                        if (xhr.responseJSON && xhr.responseJSON.message) {
-                            errorMessage = xhr.responseJSON.message;
-                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Login Successful',
+                            text: response.message,
+                        }).then(function() {
+                            window.location.href = response.redirect;
+                        });
+                    } else {
+                        console.error('Login Failed:', response);
                         Swal.fire({
                             icon: 'error',
-                            title: 'Login Error',
-                            text: errorMessage
+                            title: 'Login Failed',
+                            text: response.message || 'An error occurred during login.'
                         });
                     }
-                });
-                return false;
-            }
-        });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Login Error:', {
+                        status: status,
+                        error: error,
+                        response: xhr.responseText
+                    });
+
+                    var errorMessage = 'An unexpected error occurred. Please try again later.';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Login Error',
+                        text: errorMessage
+                    });
+                }
+            });
+            return false;
+        }
     });
-    </script>
+});
+</script>
 </body>
 </html>
