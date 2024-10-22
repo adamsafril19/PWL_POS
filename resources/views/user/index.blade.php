@@ -6,8 +6,18 @@
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
-            <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
+            <button type="button" class="btn btn-info" onclick="modalAction('{{ url('/user/import/') }}')">
+                <i class="fa fa-file-import"></i> Import User
+            </button>
+            <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-success">
+                <i class="fa fa-plus"></i> Tambah Ajax
+            </button>
+            <a href="{{ url('/user/export_excel') }}" class="btn btn-primary">
+                <i class="fa fa-file-excel"></i> Export Excel
+            </a>
+            <a href="{{ url('/user/export_pdf') }}" class="btn btn-warning">
+                <i class="fa fa-file-pdf"></i> Export PDF
+            </a>
         </div>
     </div>
     <div class="card-body">
@@ -45,9 +55,9 @@
             </tr>
             </thead>
         </table>
-        </div>
     </div>
-    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+</div>
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 
 @endsection
 

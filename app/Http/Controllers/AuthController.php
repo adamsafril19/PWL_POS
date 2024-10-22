@@ -17,7 +17,7 @@ class AuthController extends Controller
                 'username' => Auth::user()->username,
                 'role' => Auth::user()->getRole() // tambahkan log role
             ]);
-            return redirect()->route('home');
+            return redirect()->route('dashboard');
         }
         return view('auth.login');
     }
@@ -56,7 +56,7 @@ class AuthController extends Controller
 
                 $request->session()->regenerate();
 
-                return $this->sendLoginResponse($request, true, 'Login Berhasil', route('home'));
+                return $this->sendLoginResponse($request, true, 'Login Berhasil', route('dashboard'));
             }
 
             Log::warning('Authentication failed', ['username' => $credentials['username']]);

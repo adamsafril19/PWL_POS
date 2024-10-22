@@ -86,6 +86,9 @@
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
                     </div>
+                    <p class="mb-1">
+                        <a href="{{ route('register') }}" class="text-center">Register akun baru</a>
+                    </p>
                 </form>
             </div>
         </div>

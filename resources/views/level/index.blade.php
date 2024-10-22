@@ -6,8 +6,18 @@
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah</a>
-            <button onclick="modalAction('{{ url('level/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah Ajax</button>
+            <button type="button" class="btn btn-info" onclick="modalAction('{{ url('/level/import/') }}')">
+                <i class="fa fa-file-import"></i> Import Data
+            </button>
+            <button onclick="modalAction('{{ url('level/create_ajax') }}')" class="btn btn-success">
+                <i class="fa fa-plus"></i> Tambah Ajax
+            </button>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url('/level/export_excel/') }}'">
+                <i class="fa fa-file-excel"></i> Export to Excel
+            </button>
+            <button type="button" class="btn btn-warning" onclick="window.location.href='{{ url('/level/export_pdf/') }}'">
+                <i class="fa fa-file-pdf"></i> Export to PDF
+            </button>
         </div>
     </div>
     <div class="card-body">
@@ -28,9 +38,9 @@
             </tr>
             </thead>
         </table>
-        </div>
     </div>
-    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+</div>
+<div id="myModalLevel" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
 @push('css')
@@ -38,17 +48,18 @@
 
 @push('js')
 <script>
-     // Deklarasikan dataUser sebagai variabel global
+     // Deklarasikan dataLevel sebagai variabel global
      var dataLevel;
 
     function modalAction(url = ''){
-        $('#myModal').load(url,function(){
-            $('#myModal').modal('show');
+        $('#myModalLevel').load(url,function(){
+            $('#myModalLevel').modal('show');
         });
     }
 
     $(document).ready(function() {
-        var dataLevel = $('#m_level').DataTable({
+            dataLevel = $('#m_level').DataTable({
+            processing: true,
             serverSide: true,
             ajax: {
                 "url": "{{ route('level.list') }}",

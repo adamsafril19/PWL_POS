@@ -58,7 +58,14 @@
   @include('layouts.footer')
 </div>
 <!-- ./wrapper -->
-
+    <!-- Modal structure for loading content -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <!-- Content will be dynamically loaded via AJAX -->
+      </div>
+    </div>
+  </div>
 <!-- jQuery -->
 <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -87,6 +94,26 @@
 <script>
     // Untuk mengirimkan token Laravel CSRF pada setiap request ajax
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    // AJAX logic for profile picture upload or any other modal usage can go here
+    $(document).ready(function() {
+        $('#upload-photo-link').click(function() {
+            $.ajax({
+                url: "{{ url('/profile') }}",  // Fetch the profile upload view
+                type: "GET",
+                success: function(response) {
+                    $('#myModal').html(response);  // Load the response (HTML form) into the modal
+                    $('#myModal').modal('show');   // Show the modal with the profile form
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to load the profile upload form.'
+                    });
+                }
+            });
+        });
+    });
 </script>
 @stack('js')
 </body>

@@ -20,7 +20,7 @@
 <div id="modal-master" class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Detail Data level</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Detail Data Level</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -29,11 +29,11 @@
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <tr>
-                        <th width="30%">Kode</th>
+                        <th width="30%">Kode Level</th>
                         <td>{{ $level->level_kode }}</td>
                     </tr>
                     <tr>
-                        <th>Level Nama</th>
+                        <th>Nama Level</th>
                         <td>{{ $level->level_nama }}</td>
                     </tr>
                     <tr>
@@ -56,10 +56,10 @@
 
 <script>
 $(document).ready(function() {
-    // Tambahkan efek animasi saat modal muncul
+    // Animasi fade in saat tabel muncul
     $('.table-responsive').hide().fadeIn('slow');
 
-    // Optional: Tambahkan efek hover pada baris tabel
+    // Efek hover pada baris tabel
     $('.table-bordered tr').hover(
         function() {
             $(this).addClass('table-active');

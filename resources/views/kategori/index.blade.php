@@ -5,7 +5,18 @@
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
-            <a class="btn btn-sm btn-primary mt-1" href="{{ ('kategori/create') }}">Tambah</a>
+            <button type="button" class="btn btn-info" onclick="modalAction('{{ url('/kategori/import') }}')">
+                <i class="fa fa-file-import"></i> Import
+            </button>
+            <button onclick="modalAction('{{ route('kategori.create.ajax') }}')" class="btn btn-success">
+                <i class="fa fa-plus"></i> Tambah Ajax
+            </button>
+            <a href="{{ url('/kategori/export_excel') }}" class="btn btn-primary">
+                <i class="fa fa-file-excel"></i> Export Excel
+            </a>
+            <a href="{{ url('/kategori/export_pdf') }}" class="btn btn-warning">
+                <i class="fa fa-file-pdf"></i> Export PDF
+            </a>
         </div>
     </div>
     <div class="card-body">
@@ -28,24 +39,31 @@
         </table>
     </div>
 </div>
+
+<div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
 @push('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css">
 @endpush
 
 @push('js')
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
 <script>
+var dataKategori;
+
+function modalAction(url = '') {
+    $('#myModal').load(url,function(){
+        $('#myModal').modal('show');
+    });
+}
+
 $(document).ready(function() {
-    $('#m_kategori').DataTable({
+    dataKategori = $('#m_kategori').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-            url: "{{ route('kategori.list') }}",
-            type: "POST",
-            data: function(d) {
+            "url": "{{ route('kategori.list') }}",
+            "type": "POST",
+            "data": function(d) {
                 d._token = "{{ csrf_token() }}";
             }
         },
@@ -70,22 +88,7 @@ $(document).ready(function() {
                 orderable: false,
                 searchable: false
             }
-        ],
-        order: [[1, 'asc']],
-        language: {
-            processing: "Memproses...",
-            search: "Cari:",
-            lengthMenu: "Tampilkan _MENU_ entri",
-            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
-            infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
-            infoFiltered: "(disaring dari _MAX_ entri keseluruhan)",
-            paginate: {
-                first: "Pertama",
-                previous: "Sebelumnya",
-                next: "Selanjutnya",
-                last: "Terakhir"
-            }
-        }
+        ]
     });
 });
 </script>

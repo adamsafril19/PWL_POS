@@ -2,10 +2,10 @@
     <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="images/pp/logo.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
-        <a href="#" class="d-block">Adam Safril</a>
+        <a href="{{ url('/profile') }}" class="d-block">Adam Safril</a>
       </div>
     </div>
 
@@ -27,7 +27,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="{{url('/')}}" class="nav-link {{($activeMenu == 'dashboard')?'active' : ''}}">
+          <a href="{{url('/dashboard')}}" class="nav-link {{($activeMenu == 'dashboard')?'active' : ''}}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
@@ -72,12 +72,12 @@
               </a>
             </li>
             <li class="nav-item">
-                <a href="{{url('/barang')}}" class="nav-link {{ ($activeMenu == 'penjualan')? 'active' : ''}}">
+                <a href="{{url('/penjualan')}}" class="nav-link {{ ($activeMenu == 'penjualan')? 'active' : ''}}">
                   <i class="nav-icon fas fa-cash-register"></i>
                   <p>Transaksi Penjualan</p>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item bg-danger mt-3">
                 <a href="{{url('/logout')}}" class="nav-link {{ ($activeMenu == 'logout')? 'active' : ''}}">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
                     <p>LogOut</p>

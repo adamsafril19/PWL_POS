@@ -131,5 +131,38 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+            <img src="{{ asset('images/pp/logo.jpg' . auth()->user()->avatar) }}"
+                class="img-circle"
+                alt="User Image"
+                style="width: 40px; height: 40px; object-fit: cover;">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a href="{{ url('/profile') }}" class="dropdown-item">
+                <i class="fas fa-user mr-2"></i> Profil Anda
+            </a>
+        </div>
+      </li>
+      <script>
+          $(document).ready(function() {
+              $('#upload-photo-link').click(function() {
+                  $.ajax({
+                      url: "{{ url('/profile') }}",
+                      type: "POST",
+                      success: function(response) {
+                          $('#myModal').html(response);
+                          $('#myModal').modal('show');
+                      },
+                      error: function(xhr) {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: 'Failed to load the profile upload form.'
+                          });
+                      }
+                  });
+              });
+          });
+      </script>
     </ul>
   </nav>
