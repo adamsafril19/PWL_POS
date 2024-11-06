@@ -133,7 +133,7 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-            <img src="{{ asset('images/pp/logo.jpg' . auth()->user()->avatar) }}"
+            <img src="{{ asset('images/pp/cob.jpg' . auth()->user()->avatar) }}"
                 class="img-circle"
                 alt="User Image"
                 style="width: 40px; height: 40px; object-fit: cover;">

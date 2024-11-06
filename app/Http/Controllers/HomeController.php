@@ -13,6 +13,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $path = storage_path('framework/sessions');
+
         return view('home');
+
     }
 }

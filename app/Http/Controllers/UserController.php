@@ -552,32 +552,43 @@ class UserController extends Controller
     }
 
     public function updateProfile(Request $request)
-    {
-        if ($request->ajax() || $request->wantsJson()) {
-            $rules = [
-                'username' => 'required|string|max:50|unique:m_user,username,' . auth()->user()->user_id . ',user_id',
-                'nama' => 'required|string|max:100',
-                'password' => 'nullable|string|min:6',
-            ];
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Validasi Gagal',
-                    'msgField' => $validator->errors(),
-                ]);
-            }
-            $user = UserModel::findOrFail(auth()->user()->user_id);
-            $user->username = $request->username;
-            $user->nama = $request->nama;
-            if ($request->password) {
-                $user->password = bcrypt($request->password);
-            }
-            $user->save();
-            return response()->json([
-                'status' => true,
-                'message' => 'Profil berhasil diperbarui',
-            ]);
+{
+    // Validasi input
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+        'phone_number' => 'nullable|string|max:15',
+        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+    ]);
+
+    // Ambil user yang sedang login
+    $user = auth()->user();
+
+    // Periksa apakah ada file avatar yang diunggah
+    if ($request->hasFile('avatar')) {
+        // Hapus gambar profil lama jika ada
+        if ($user->avatar && Storage::exists('public/avatars/' . $user->avatar)) {
+            Storage::delete('public/avatars/' . $user->avatar);
         }
+
+        // Simpan file gambar baru
+        $file = $request->file('avatar');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/avatars', $filename);
+
+        // Update avatar user
+        $user->avatar = $filename;
     }
+
+    // Update data profil lainnya
+    $user->name = $validatedData['name'];
+    $user->email = $validatedData['email'];
+    $user->phone_number = $validatedData['phone_number'];
+
+    // Simpan perubahan
+    $user->save();
+
+    return back()->with('success', 'Profile updated successfully');
+}
+
 }

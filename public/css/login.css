@@ -1,0 +1,179 @@
+/* Login Page Specific Styles */
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card.card-outline.card-primary {
+    border: none;
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: none;
+    padding: 2rem 1.5rem;
+}
+
+.card-header a.h1 {
+    color: #2563eb;
+    font-weight: 800;
+    font-size: 1.75rem;
+    text-decoration: none;
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.login-box-msg {
+    color: #64748b;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+    transform: translateY(-2px);
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.input-group-text {
+    background: transparent;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    color: #64748b;
+    padding: 0.75rem 1rem;
+}
+
+.input-group input {
+    border-top-right-radius: 0.5rem !important;
+    border-bottom-right-radius: 0.5rem !important;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.icheck-primary {
+    margin-top: 0.5rem;
+}
+
+.icheck-primary label {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-danger {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.alert-info {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.alert ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.alert li {
+    margin-bottom: 0.25rem;
+}
+
+/* Register Link */
+.mb-1 {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.mb-1 a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.mb-1 a:hover {
+    color: #1d4ed8;
+}
+
+/* Error Messages */
+.invalid-feedback {
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .login-box {
+        margin: 1rem;
+    }
+
+    .card-header a.h1 {
+        font-size: 1.5rem;
+    }
+}

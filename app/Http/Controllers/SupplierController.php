@@ -12,7 +12,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class supplierController extends Controller
+class SupplierController extends Controller
 {
     public function index(){
 

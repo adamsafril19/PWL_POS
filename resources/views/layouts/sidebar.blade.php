@@ -2,7 +2,7 @@
     <!-- Sidebar user (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="images/pp/logo.jpg" class="img-circle elevation-2" alt="User Image">
+        <img src="images/pp/cob.jpg" class="img-circle elevation-2" alt="User Image">
       </div>
       <div class="info">
         <a href="{{ url('/profile') }}" class="d-block">Adam Safril</a>
